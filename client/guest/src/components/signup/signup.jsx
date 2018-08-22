@@ -42,6 +42,8 @@ class Signup extends Component {
                             age: '',
                             load: false,
                             hasAlready: false,
+                            errror: false,
+                            messageError: '',
                             success: true
                         })
                     } else {
@@ -50,7 +52,9 @@ class Signup extends Component {
                             name: '',
                             age: '',
                             load: false,
-                            errror: true,
+                            success: false,
+                            hasAlready: false,
+                            errror: false,
                             messageError: res.message
                         })
                     }
@@ -59,7 +63,10 @@ class Signup extends Component {
                 this.setState({
                     password: '',
                     load: false,
-                    hasAlready: true
+                    hasAlready: true,
+                    errror: false,
+                    messageError: '',
+                    success: false
                 })
             }
         })
