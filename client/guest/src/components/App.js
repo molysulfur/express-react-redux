@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
 
 import Navbar from "./Navbar";
-import IndexPage from "./index/index";
+import IndexPage from "./index/";
 import LoginPage from "./login";
 import SignupPage from "./signup";
 

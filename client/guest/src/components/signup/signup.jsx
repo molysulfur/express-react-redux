@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { userSignupRequest, isEmailExists } from "../../actions/signup/signupAction";
+import { userActions } from "../../actions/userActions";
+import Loading from "../loading";
 
 class Signup extends Component {
     constructor() {
@@ -31,9 +32,9 @@ class Signup extends Component {
             load: true
         })
 
-        isEmailExists(this.state.email).then(data => {
+        userActions.isEmailExists(this.state.email).then(data => {
             if (!data.status) {
-                userSignupRequest(this.state).then(res => {
+                userActions.userSignupRequest(this.state).then(res => {
                     if (res.status) {
                         this.setState({
                             email: '',
@@ -78,6 +79,7 @@ class Signup extends Component {
                 {this.state.hasAlready && <div className="alert alert-warning text-center">This email has already.</div>}
                 {this.state.success && <div className="alert alert-success text-center">Success !</div>}
                 {this.state.errror && <div className="alert alert-danger text-center">{this.state.messageError}</div>}
+                {this.state.load && <Loading /> }
                 <form onSubmit={e => {
                     this.onSubmit(e)
                 }}>
