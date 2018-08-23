@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Signup from "./Signup";
+import Signup from "./signup";
 class SignupPage extends Component {
     render() {
         return (
