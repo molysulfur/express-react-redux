@@ -15,7 +15,8 @@ const Loading = () => (
         "bottom": "0",
         "left": "0",
         "right": "0",
-        "margin": "auto"
+        "margin": "auto",
+        "zIndex": "2"
     }}
     />
 )

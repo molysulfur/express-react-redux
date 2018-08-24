@@ -13,8 +13,8 @@ app.use("/", require("./routes/get/allUser"))
 app.use("/api/emailExists", require("./routes/get/emailExists"))
 app.use("/api/login", require("./routes/post/login"))
 app.use("/api/signup", require("./routes/post/signup"))
+app.use("/api/checkToken", require("./routes/post/checkToken"))
 
-app.use("/decode", require("./routes/get/test"))
 
 app.listen(8080,()=>{
     console.log("http://localhost:8080")

@@ -2,24 +2,26 @@ import { userConstants } from "../constants/";
 
 
 let token = localStorage.getItem('token');
-const initialState = token ? { "loggedIn": true, "token": token, "errorLogin": false, "errorMsgLogin" : "" } : {};
+const initialState = token ? { "loggedIn": true, "token": token, "errorLogin": false, "errorMsgLogin": "" } : {};
 
-export function authentication(state = initialState, action) {
+export function authentication(state = initialState, action={}) {
     switch (action.type) {
         case userConstants.LOGIN_SUCCESS:
             return {
                 "loggedIn": true,
                 "errorLogin": false,
                 "token": action.token,
-                "errorMsgLogin" : ""
+                "errorMsgLogin": ""
             }
         case userConstants.LOGIN_FAILURE:
             return {
                 "loggedIn": false,
                 "errorLogin": true,
-                "errorMsgLogin" : action.error,
+                "errorMsgLogin": action.error,
                 "token": ""
             }
+        case userConstants.LOGOUT:
+            return initialState
         default:
             return state
     }

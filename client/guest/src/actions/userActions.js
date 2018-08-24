@@ -1,4 +1,5 @@
 import axios from "axios";
+import { userConstants } from "../constants"
 
 function userSignupRequest(userData) {
     const { name, age, email, password } = userData
@@ -13,50 +14,63 @@ function isEmailExists(email) {
         .catch(err => { console.log(err) });
 }
 
-
-// function signIn(state) {
-//     const { email, password } = state
-//     return dispatch => {
-//         axios.post('http://localhost:8080/api/login', {
-//             email,
-//             password,
-
-//         }).then(res => {
-//             if (!res.data['status']) {
-//                 throw new Error("Email or Password is incorrect")
-//             } else {
-//                 localStorage.setItem('token', res.data['token']);
-//                 dispatch(success(res.data['token']))
-//             }
-//         }).catch(error => {
-//             dispatch(failure(error.message))
-//         })
-//         function success(token) { return { type: userConstants.LOGIN_SUCCESS, token } }
-//         function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
-//     }
-// }
-
 function signIn(state) {
     const { email, password } = state
-    return new Promise((resolve, reject) => {
-        axios.post('http://localhost:8080/api/login', {
-            email,
-            password
-        }).then((res) => {
-            if (!res.data['status']) {
-                throw new Error("Email or Password is incorrect")
+    return async (dispatch) => {
+        try {
+            const res = await axios.post('http://localhost:8080/api/login', {
+                email,
+                password
+            })
+
+            if (res.data['status']) {
+                let token = res.data['token']
+                localStorage.setItem('token', res.data['token'])
+                dispatch(SUCCESS(token))
             } else {
-                localStorage.setItem('token', res.data['token']);
+                throw new Error("Invalid Email or Password")
             }
-            resolve(res.data['token']);
-        }).catch((err) => {
-            reject(err.message);
-        })
-    })
+        } catch (error){
+            dispatch(FAILURE(error.message));
+        }
+    }
+    function SUCCESS(token) { return { type: userConstants.LOGIN_SUCCESS, token } }
+    function FAILURE(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+function check_token(token) {
+    return async (dispatch) => {
+        try {
+            const res = await axios.post('http://localhost:8080/api/checkToken', { token })
+            if (res.data.status) {
+                dispatch(SUCCESS(token))
+            } else {
+                throw new Error("Invalid Email or Password")
+            }
+
+        } catch (error) {
+            dispatch(FAILURE(error.message));
+        }
+    }
+    function SUCCESS(token) { return { type: userConstants.LOGIN_SUCCESS, token } }
+    function FAILURE(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+
+}
+
+
+function logOut() {
+
+    return dispatch => {
+        localStorage.removeItem('token')
+        dispatch(logOut())
+    }
+    function logOut() { return { type: userConstants.LOGOUT, } }
 }
 
 export const userActions = {
     userSignupRequest,
     isEmailExists,
-    signIn
+    signIn,
+    logOut,
+    check_token
 }
