@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken')
 const hash = require('../hash')
 const config = require('../../config')
 
+
 router.post('/', (req, res) => {
     MongoClient.connect(config.url, { useNewUrlParser: true }, (err, db) => {
         assert.equal(null, err);
@@ -20,14 +21,12 @@ router.post('/', (req, res) => {
             .toArray((err, result) => {
 
                 assert.equal(null, err);
-
                 if (typeof result[0] != "undefined") {
                     let token = jwt.sign({
                         name: result[0]['name'],
                         email: result[0]['email'],
                         role: result[0]['role']
                     }, '$ukit', { expiresIn: '1d' })
-                    
                     res.status(200).json({
                         "status": true,
                         token

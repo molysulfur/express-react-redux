@@ -17,12 +17,13 @@ function isEmailExists(email) {
 function signIn(state) {
     const { email, password } = state
     return async (dispatch) => {
+        dispatch(REQUEST())
         try {
             const res = await axios.post('http://localhost:8080/api/login', {
                 email,
                 password
             })
-
+            console.log(res.data)
             if (res.data['status']) {
                 let token = res.data['token']
                 localStorage.setItem('token', res.data['token'])
@@ -30,10 +31,12 @@ function signIn(state) {
             } else {
                 throw new Error("Invalid Email or Password")
             }
-        } catch (error){
+        } catch (error) {
+            localStorage.setItem('token', "")
             dispatch(FAILURE(error.message));
         }
     }
+    function REQUEST() { return { type: userConstants.LOGIN_REQUEST } }
     function SUCCESS(token) { return { type: userConstants.LOGIN_SUCCESS, token } }
     function FAILURE(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }

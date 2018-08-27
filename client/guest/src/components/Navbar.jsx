@@ -15,15 +15,14 @@ class Navbar extends Component {
     }
 
     render() {
+        const { loggedIn } = this.props
         return (
             <header className="top-head container-fluid">
                 <nav className=" navbar-default">
-                    <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">
+                        <Link className="navbar-brand" to="/home">
                             <i className="ion-social-buffer"></i>
-                            <span className="nav-label">Velonic</span>
+                            <span className="nav-label">React</span>
                         </Link>
-                    </div>
                     <ul className="nav navbar-nav navbar-right top-menu top-right-menu">
                         <li className="dropdown">
                             <a data-toggle="dropdown" className="dropdown-toggle">
@@ -67,7 +66,7 @@ class Navbar extends Component {
                                 </li>
                             </ul>
                         </li>
-                        {this.props.loggedIn &&
+                        {loggedIn ?
                             <li className="dropdown text-center">
                                 <a data-toggle="dropdown" className="dropdown-toggle">
                                     <img alt="" src="img/avatar-2.jpg" className="img-circle profile-img thumb-sm" />
@@ -80,19 +79,17 @@ class Navbar extends Component {
                                     <li><a onClick={this.logOut}><i className="fa fa-sign-out"></i> Log Out</a></li>
                                 </ul>
                             </li>
-                        }
-                        {!this.props.loggedIn &&
+                            :
                             <li className="dropdown text-center">
                                 <a data-toggle="dropdown" className="dropdown-toggle">
                                     <span className="username">เข้าสู่ระบบ</span> <span className="caret"></span>
                                 </a>
                                 <ul className="dropdown-menu pro-menu fadeInUp animated" tabIndex="5003" style={{ "overflow": "hidden", "outline": "none" }}>
-                                    <li><Link to="login"><i className="fa fa-cog"></i> Login</Link></li>
-                                    <li><Link to="signup"><i className="fa fa-bell"></i> Sign up</Link></li>
+                                    <li><Link to="login"><i className="fa fa-child"></i> Login</Link></li>
+                                    <li><Link to="signup"><i className="fa fa-user-plus"></i> Sign up</Link></li>
                                 </ul>
                             </li>
                         }
-
                     </ul>
                 </nav>
             </header>

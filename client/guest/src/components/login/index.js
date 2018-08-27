@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Loading from "../loading";
 import { userActions } from "../../actions/userActions";
-import { userConstants } from "../../constants/userConstants";
 
 
 class Login extends Component {
@@ -12,7 +11,6 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            load: false,
         }
         this.onInputChange = this.onInputChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -25,22 +23,13 @@ class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-        this.setState({
-            load: true,
-        })
-        
         this.props.dispatch(userActions.signIn(this.state))
-
-        this.setState({
-            load: false
-        })
-
-
     }
     render() {
+        const { loggingIn } = this.props
         return (
             < div className="wrapper-page animated fadeInDown" >
-                {this.state.load && <Loading />}
+                {loggingIn && <Loading />}
                 {this.props.errorLogin && <div className="alert alert-danger text-center">{this.props.errorMsgLogin}</div>}
                 <div className="panel panel-color panel-primary">
                     <div className="panel-heading">
@@ -60,7 +49,7 @@ class Login extends Component {
 
                         <div className="form-group text-right">
                             <div className="col-xs-12">
-                                <button className="btn btn-purple w-md" type="submit" disabled={this.state.load}>Log In</button>
+                                <button className="btn btn-purple w-md" type="submit" disabled={loggingIn}>Log In</button>
                             </div>
                         </div>
                         <div className="form-group m-t-30">
@@ -79,7 +68,7 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-    const { loggedIn = false, errorMsgLogin = "", token = "", errorLogin = false } = state.authentication
-    return { loggedIn, errorMsgLogin, token, errorLogin }
+    const { loggedIn = false, errorMsgLogin = "", token = "", errorLogin = false, loggingIn = false } = state.authentication
+    return { loggedIn, errorMsgLogin, token, errorLogin, loggingIn }
 }
 export default connect(mapStateToProps)(Login);

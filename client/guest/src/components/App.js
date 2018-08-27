@@ -4,7 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import Navbar from "./Navbar";
 import IndexPage from "./index/";
 import Login from "./login";
-import SignupPage from "./signup";
+import Signup from "./signup";
+import Home from "./home";
 
 
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={SignupPage} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/home" component={Home} />
         </Switch>
       </div>
     );
