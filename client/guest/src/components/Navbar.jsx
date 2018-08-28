@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { userActions } from "../actions/userActions";
 
@@ -12,6 +12,7 @@ class Navbar extends Component {
 
     logOut() {
         this.props.dispatch(userActions.logOut())
+        return <Redirect to="/" />
     }
 
     render() {

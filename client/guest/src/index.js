@@ -8,7 +8,6 @@ import { createLogger } from 'redux-logger';
 
 import Routers from './Routers';
 import rootReducer from "./rootReducer";
-import { userActions } from "./actions/userActions";
 
 const loggerMiddleware = createLogger();
 const store = createStore(rootReducer,
@@ -17,13 +16,6 @@ const store = createStore(rootReducer,
         loggerMiddleware
     ));
 
-
-    
-let token = localStorage.getItem("token")
-
-if(token){
-    store.dispatch(userActions.check_token(token));
-}
 
 ReactDOM.render(
     <Provider store={store}>

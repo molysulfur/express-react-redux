@@ -1,7 +1,7 @@
 import { userConstants } from "../constants/";
 
-
-const initialState = []
+let token = localStorage.getItem("token")
+const initialState = localStorage.getItem("token") ? { "loggedIn": true, "token": token } : {"loggedIn": false, "token": ""}
 
 export function authentication(state = initialState, action = {}) {
     switch (action.type) {
@@ -15,6 +15,8 @@ export function authentication(state = initialState, action = {}) {
             }
         case userConstants.LOGIN_REQUEST:
             return {
+                "errorLogin": false,
+                "errorMsgLogin": "",
                 "loggingIn": true
             }
         case userConstants.LOGIN_FAILURE:
@@ -22,11 +24,13 @@ export function authentication(state = initialState, action = {}) {
                 "loggedIn": false,
                 "errorLogin": true,
                 "errorMsgLogin": action.error,
-                "token": "",
                 "loggingIn": false
             }
         case userConstants.LOGOUT:
-            return initialState
+            return {
+                "loggedIn": false,
+                "token": "",
+            }
         default:
             return state
     }

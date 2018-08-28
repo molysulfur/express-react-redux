@@ -23,7 +23,6 @@ function signIn(state) {
                 email,
                 password
             })
-            console.log(res.data)
             if (res.data['status']) {
                 let token = res.data['token']
                 localStorage.setItem('token', res.data['token'])
@@ -67,7 +66,7 @@ function logOut() {
         localStorage.removeItem('token')
         dispatch(logOut())
     }
-    function logOut() { return { type: userConstants.LOGOUT, } }
+    function logOut() { return { type: userConstants.LOGOUT, token:""} }
 }
 
 export const userActions = {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Loading from "../loading";
 import { userActions } from "../../actions/userActions";
-
 
 class Login extends Component {
     constructor() {
@@ -27,6 +27,9 @@ class Login extends Component {
     }
     render() {
         const { loggingIn } = this.props
+        if (this.props.loggedIn === true) {
+            return <Redirect to="home" />
+        }
         return (
             < div className="wrapper-page animated fadeInDown" >
                 {loggingIn && <Loading />}
