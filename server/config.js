@@ -1,5 +1,6 @@
 module.exports = { 
-    "url":`mongodb://sukit:sukit121@ds125362.mlab.com:25362/guest`,
+    // censor your key database for security.
+    "url":`mongodb://***********:*************@ds125362.mlab.com:25362/guest`,
     "dbName" :'guest'
 }
 
