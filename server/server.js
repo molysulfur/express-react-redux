@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
+const port = process.env.PORT || 8080
+
 const app = express()
 
 app.use(bodyParser.json())
@@ -16,6 +18,6 @@ app.use("/api/signup", require("./routes/post/signup"))
 app.use("/api/checkToken", require("./routes/post/checkToken"))
 
 
-app.listen(8080,()=>{
-    console.log("http://localhost:8080")
+app.listen(port, () => {
+    console.log(`http://localhost:${port}`)
 })
